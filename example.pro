@@ -16,7 +16,6 @@ LIBS += -L"/Users/anhelinalohvina/Desktop/SFML" \
         -lsfml-audio
 
 SOURCES += \
-        main.cpp
+    main.cpp
 
-HEADERS += \
-    f.h
+HEADERS +=
