@@ -4,8 +4,7 @@
 using namespace std;
 
 set<Pair> hull;  //points of convex hull
-// Returns the side of point p with respect to line
-// joining points p1 and p2.
+
 int findSide(Pair p1, Pair p2, Pair p){
     int val = (p.second - p1.second) * (p2.first - p1.first) -
     (p2.second - p1.second) * (p.first - p1.first);
@@ -15,15 +14,11 @@ int findSide(Pair p1, Pair p2, Pair p){
     return 0;
 }
 
-// returns a value proportional to the distance
-// between the point p and the line joining the points p1 and p2
 int lineDist(Pair p1, Pair p2, Pair p){
     return abs ((p.second - p1.second) * (p2.first - p1.first) -
                 (p2.second - p1.second) * (p.first - p1.first));
 }
 
-// End points of line L are p1 and p2.  side can have value
-// 1 or -1 specifying each of the parts made by the line L
 void quickHull(Pair a[], int n, Pair p1, Pair p2, int side){
     int ind = -1;
     int max_dist = 0;
@@ -38,8 +33,6 @@ void quickHull(Pair a[], int n, Pair p1, Pair p2, int side){
         }
     }
 
-    // If no point is found, add the end points
-    // of L to the convex hull.
     if (ind == -1){
         hull.insert(p1);
         hull.insert(p2);
@@ -57,21 +50,13 @@ void printHull(Pair a[], int n){
         cout << "Convex hull not possible\n";
         return;
     }
-
-    // Finding the point with minimum and
-    // maximum x-coordinate
+    
     int min_x = 0, max_x = 0;
     for (int i=1; i<n; i++){
         if (a[i].first < a[min_x].first) min_x = i;
         if (a[i].first > a[max_x].first) max_x = i;
     }
-
-    // Recursively find convex hull points on
-    // one side of line joining a[min_x] and a[max_x]
     quickHull(a, n, a[min_x], a[max_x], 1);
-
-    // Recursively find convex hull points on
-    // other side of line joining a[min_x] and a[max_x]
     quickHull(a, n, a[min_x], a[max_x], -1);
 
     cout << "The points in Convex Hull are:\n";
