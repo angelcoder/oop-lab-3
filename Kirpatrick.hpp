@@ -9,11 +9,9 @@
 #ifndef Kirpatrick_hpp
 #define Kirpatrick_hpp
 
-#include <stdio.h>
-struct PointT
-{
-    int x, y;
-};
+#include <iostream>
+#include <vector>
+#include "Point.h"
 
-void Kirpatrick (PointT points[], int n);
+std::vector<Point> printHull(Point a[], int n);
 #endif /* Kirpatrick_hpp */
