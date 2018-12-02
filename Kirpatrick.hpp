@@ -9,9 +9,8 @@
 #ifndef Kirpatrick_hpp
 #define Kirpatrick_hpp
 
-#include <iostream>
-#include <vector>
 #include "Point.h"
+#include <vector>
 
-std::vector<Point> printHull(Point a[], int n);
+std::vector<Point> convexHullK (Point points[], int n);
 #endif /* Kirpatrick_hpp */
