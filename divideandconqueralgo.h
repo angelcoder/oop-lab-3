@@ -1,11 +1,10 @@
 #ifndef DIVIDEANDCONQUERALGO_H
 #define DIVIDEANDCONQUERALGO_H
 
-
-#include <set>
 #include <iostream>
-using namespace std;
-#define Pair pair<int, int> // Pair is a pare of two integers
+#include <vector>
+#include "Point.h"
 
-void printHull(Pair a[], int n);
+std::vector<Point> printHull(Point a[], int n);
+
 #endif // DIVIDEANDCONQUERALGO_H
