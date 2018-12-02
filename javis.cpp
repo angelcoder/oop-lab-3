@@ -1,46 +1,32 @@
-#include "javis.h"
-
+#include "Jarvis.hpp"
 #include <iostream>
 #include <vector>
+#include "Point.h"
+
 using namespace std;
-int orientation(Point p, Point q, Point r){
-    int val = (q.y - p.y) * (r.x - q.x) -
-    (q.x - p.x) * (r.y - q.y);
+int orientationJ(Point p1, Point p2, Point p3) {
+    int val = (p2.y - p1.y) * (p3.x - p2.x) -
+    (p2.x - p1.x) * (p3.y - p2.y);
+    if (val == 0) return 0;      // 0 - colinear
+    return (val > 0)? 1: 2;      // 1 - clockwise
+}                                // 2 - counterclockwise
 
-    if (val == 0) return 0;  // colinear
-    return (val > 0)? 1: 2; // clock or counterclock wise
-}
-
-void convexHull(Point points[], int n){
-    // There must be at least 3 points
-    if (n < 3) return;
-
-    // Initialize Result
+vector<Point> convexHullJ(Point points[], int n) {
     vector<Point> hull;
-
-    // Find the leftmost point
-    int l = 0;
+    int leftPoint = 0;
     for (int i = 1; i < n; i++)
-        if (points[i].x < points[l].x)
-            l = i;
-    
-    int p = l, q;
-    do
-    {
-        // Add current point to result
-        hull.push_back(points[p]);
+        if (points[i].x < points[leftPoint].x)
+            leftPoint = i;
 
-        q = (p+1)%n;
+    int newLeft = leftPoint, current;
+    do {
+        hull.push_back(points[newLeft]);
+        current = (newLeft+1)%n;
         for (int i = 0; i < n; i++){
-            if (orientation(points[p], points[i], points[q]) == 2)
-                q = i;
+            if (orientationJ(points[newLeft], points[i], points[current]) == 1)
+                current = i;
         }
-
-        p = q;
-
-    } while (p != l);  // While we don't come to first point
-    
-    for (int i = 0; i < hull.size(); i++)
-        cout << "(" << hull[i].x << ", "
-        << hull[i].y << ")\n";
-}
+        newLeft = current;
+    } while (newLeft != leftPoint);
+    return hull;
+} 
