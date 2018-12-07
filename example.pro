@@ -13,14 +13,21 @@ LIBS += -L"/Users/anhelinalohvina/Desktop/SFML" \
         -lsfml-graphics \
         -lsfml-window \
         -lsfml-system \
-        -lsfml-audio
+        -lsfml-audio \
+        -lsfml-network
+
 
 SOURCES += \
         main.cpp \
     divideandconqueralgo.cpp \
-    javis.cpp
+    javis.cpp \
+    graham.cpp \
+    kirpatrick.cpp
 
 HEADERS += \
     divideandconqueralgo.h \
-    javis.h
+    javis.h \
+    graham.h \
+    point.h \
+    kirpatrick.h
 
