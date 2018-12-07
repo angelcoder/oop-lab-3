@@ -1,43 +1,53 @@
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 #include "divideandconqueralgo.h"
-//#include "javis.h"
+#include "javis.h"
 #include "graham.h"
 #include <iostream>
 #include <algorithm>
 #include <set>
-//визначається точка h , для якої трикутник hlr має найбільшу площу серед всіх трикутників = distance(h, lr=max) because S=0.5*(lr)*h
+#include <ctime>
+#include <kirpatrick.h>
+#include <ctime>
+#include <vector>
+//#include <SFML/Network.hpp>
+using namespace sf;
 using namespace std;
 
 int main(){
-    int method;
-    cin >> method;
-    //THERE SHOULD BE A VECTOR OF FUNCTIONS SOON
-    switch (method) {
-    /*
-    case 4:{
-        cout <<"javis method\n";
-        Point points[] = {{0, 3}, {2, 2}, {1, 1}, {2, 1},
-            {3, 0}, {0, 0}, {3, 3}};
-        int n4 = sizeof(points)/sizeof(points[0]);
-        convexHull(points, n4);
-        break;
+    sf::RenderWindow window(sf::VideoMode(1000, 1000), "Hello");
+    srand(time(0));
+    Point points[] = {{200, 800}, {200, 700}, {300, 600}, {600, 900}, {200, 400}, {100, 900}, {900, 600}, {600, 200},
+        {200, 600}, {0, 0}, {400, 400}, {400, 200}, {200, 200}, {50, 950}, {240, 710}, {380, 640}, {690, 910}, {230, 440},
+        {150, 980}, {920, 620}, {620, 220}, {290, 650}, {0, 0}, {450, 450}, {470, 270}, {220, 290}, {30, 995}};
+    int n = sizeof(points)/sizeof(points[0]);
+    sf::VertexArray lines(sf::LinesStrip, n);
+    vector<Point> hull = printHull(points, n);
+    CircleShape MyCircle(100.f);
+    MyCircle.setFillColor(Color::Green);
+    int rads=4;
+    MyCircle.setRadius(rads);
+    for(int i=0; i<n; i++){
+        MyCircle.setPosition(points[i].x, points[i].y);
+        window.draw(MyCircle);
     }
-    */
-    case 5:{
-        Point pointsG[] = {{0, 3}, {1, 1}, {2, 2}, {4, 4},
-                          {0, 0}, {1, 2}, {3, 1}, {3, 3}};
-        int n5 = sizeof(pointsG)/sizeof(pointsG[0]);
-        convexHullG(pointsG, n5);
-        break;
-    }
-    case 6:{
-        cout <<"Divide and counquer method\n";
-        Pair a[ ] =  {{0, 3}, {2, 2}, {1, 1}, {2, 1},{3, 0}, {0, 0}, {3, 3}};
-        int n6 = sizeof(a)/sizeof(a[0]);
-        printHull(a, n6);
-        break;
-    }
+
+    float currentFrame=0;
+
+    while (window.isOpen()){
+        sf::Event event;
+        while (window.pollEvent(event)){
+            if (event.type == sf::Event::Closed) window.close();
+        }
+        for (int i = 0; i < hull.size(); i++){
+            lines[i].position = sf::Vector2f(hull[i].x, hull[i].y);
+            window.display();
+            window.draw(lines);
+           sf::sleep(sf::seconds(0.5));
+        }
+        window.clear();
     }
     return 0;
-}
+ }
 
 
